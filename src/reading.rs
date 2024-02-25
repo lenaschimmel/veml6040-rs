@@ -27,15 +27,11 @@ where
 
     /// Read the measurement data of all channels at once.
     pub fn read_all_channels(&mut self) -> Result<AllChannelMeasurement, Error<E>> {
-        let mut data = [0; 8];
-        self.i2c
-            .write_read(DEVICE_ADDRESS, &[Register::R_DATA], &mut data)
-            .map_err(Error::I2C)?;
         Ok(AllChannelMeasurement {
-            red: u16::from(data[1]) << 8 | u16::from(data[0]),
-            green: u16::from(data[3]) << 8 | u16::from(data[2]),
-            blue: u16::from(data[5]) << 8 | u16::from(data[4]),
-            white: u16::from(data[7]) << 8 | u16::from(data[6]),
+            red: self.read_red_channel()?,
+            green: self.read_green_channel()?,
+            blue: self.read_blue_channel()?,
+            white: self.read_white_channel()?,
         })
     }
 
