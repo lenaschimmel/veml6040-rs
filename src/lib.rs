@@ -105,9 +105,10 @@
 #![deny(unsafe_code)]
 #![deny(missing_docs)]
 #![doc(html_root_url = "https://docs.rs/veml6040/0.1.1")]
-#![no_std]
 
 use embedded_hal::blocking::i2c;
+use std::fmt;
+use std::fmt::Debug;
 
 /// All possible errors in this crate
 #[derive(Debug)]
@@ -115,6 +116,14 @@ pub enum Error<E> {
     /// I²C bus error
     I2C(E),
 }
+
+impl<E> fmt::Display for Error<E> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "some I2C error")
+    }
+}
+
+impl<E: Debug> std::error::Error for Error<E> {}
 
 /// Possible measurement modes
 #[derive(Debug, Clone, Copy, PartialEq)]
