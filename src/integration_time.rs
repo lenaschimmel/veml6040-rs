@@ -21,11 +21,11 @@ impl IntegrationTime {
      */
     pub fn millis(&self) -> i32 {
         match *self {
-            IntegrationTime::_40ms => 40,
-            IntegrationTime::_80ms => 80,
-            IntegrationTime::_160ms => 160,
-            IntegrationTime::_320ms => 320,
-            IntegrationTime::_640ms => 640,
+            IntegrationTime::_40ms   => 40,
+            IntegrationTime::_80ms   => 80,
+            IntegrationTime::_160ms  => 160,
+            IntegrationTime::_320ms  => 320,
+            IntegrationTime::_640ms  => 640,
             IntegrationTime::_1280ms => 1280,
         }
     }
@@ -44,11 +44,11 @@ impl IntegrationTime {
      */
     pub fn sensitivity(&self) -> f32 {
         match *self {
-            IntegrationTime::_40ms => 0.25168,
-            IntegrationTime::_80ms => 0.12584,
-            IntegrationTime::_160ms => 0.06292,
-            IntegrationTime::_320ms => 0.03146,
-            IntegrationTime::_640ms => 0.01573,
+            IntegrationTime::_40ms   => 0.25168,
+            IntegrationTime::_80ms   => 0.12584,
+            IntegrationTime::_160ms  => 0.06292,
+            IntegrationTime::_320ms  => 0.03146,
+            IntegrationTime::_640ms  => 0.01573,
             IntegrationTime::_1280ms => 0.007865,
         }
     }
@@ -59,12 +59,35 @@ impl IntegrationTime {
      */
     pub fn bit_pattern(&self) -> u8 {
         match *self {
-            IntegrationTime::_40ms => 0b0000_0000,
-            IntegrationTime::_80ms => 0b0001_0000,
-            IntegrationTime::_160ms => 0b0010_0000,
-            IntegrationTime::_320ms => 0b0011_0000,
-            IntegrationTime::_640ms => 0b0100_0000,
+            IntegrationTime::_40ms   => 0b0000_0000,
+            IntegrationTime::_80ms   => 0b0001_0000,
+            IntegrationTime::_160ms  => 0b0010_0000,
+            IntegrationTime::_320ms  => 0b0011_0000,
+            IntegrationTime::_640ms  => 0b0100_0000,
             IntegrationTime::_1280ms => 0b0101_0000,
+        }
+    }
+
+    pub fn longer(&self) -> Option<IntegrationTime> {
+        match *self {
+            IntegrationTime::_40ms   => Some(IntegrationTime::_80ms),
+            IntegrationTime::_80ms   => Some(IntegrationTime::_160ms),
+            IntegrationTime::_160ms  => Some(IntegrationTime::_320ms),
+            IntegrationTime::_320ms  => Some(IntegrationTime::_640ms),
+            IntegrationTime::_640ms  => Some(IntegrationTime::_1280ms),
+            IntegrationTime::_1280ms => None,
+        }
+    }
+
+
+    pub fn shorter(&self) -> Option<IntegrationTime> {
+        match *self {
+            IntegrationTime::_40ms   => None,
+            IntegrationTime::_80ms   => Some(IntegrationTime::_40ms),
+            IntegrationTime::_160ms  => Some(IntegrationTime::_80ms),
+            IntegrationTime::_320ms  => Some(IntegrationTime::_160ms),
+            IntegrationTime::_640ms  => Some(IntegrationTime::_320ms),
+            IntegrationTime::_1280ms => Some(IntegrationTime::_640ms),
         }
     }
 

@@ -105,8 +105,6 @@
 #![deny(unsafe_code)]
 #![deny(missing_docs)]
 #![doc(html_root_url = "https://docs.rs/veml6040/0.1.1")]
-#![no_std]
-
 use embedded_hal::blocking::i2c;
 
 /// All possible errors in this crate
@@ -191,3 +189,7 @@ where
 mod configuration;
 mod reading;
 mod integration_time;
+
+/// Contains a wrapper that offers absolute measurements and 
+/// automatic selection of a suitable integration time.
+pub mod wrapper;

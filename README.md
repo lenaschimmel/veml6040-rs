@@ -1,11 +1,10 @@
 # Rust VEML6040 RGBW Color Sensor Driver
-
 [![crates.io](https://img.shields.io/crates/v/veml6040.svg)](https://crates.io/crates/veml6040)
 [![Docs](https://docs.rs/veml6040/badge.svg)](https://docs.rs/veml6040)
 [![Build Status](https://github.com/eldruin/veml6040-rs/workflows/Build/badge.svg)](https://github.com/eldruin/veml6040-rs/actions?query=workflow%3ABuild)
 [![Coverage Status](https://coveralls.io/repos/github/eldruin/veml6040-rs/badge.svg?branch=master)](https://coveralls.io/github/eldruin/veml6040-rs?branch=master)
 
-This is a platform agnostic Rust driver for the VEML6040 RGBW color light
+This is a fork of the platform agnostic Rust driver for the VEML6040 RGBW color light
 sensor, based on the [`embedded-hal`] traits.
 
 [`embedded-hal`]: https://github.com/rust-embedded/embedded-hal
@@ -20,6 +19,15 @@ This driver allows you to:
 - Read the blue channel measurement.
 - Read the white channel measurement.
 - Read measurement of all channels at once.
+
+## The fork
+- In the original driver, `read_all_channels` did not work, so I fixed it with a work-around
+- There's a branch that uses `std::Error`. This makes it depend on `std`, but allows much easier error-handling, for example with `anyhow`
+- Wrapper around the driver
+  - Returns absolute brightness in lux
+  - Adds automatic exposure setting
+    - increases or decreases the exposure until the reading is within a safe range
+    - remembers the previous exposure setting as a starting point for the next measurement
 
 ## The device
 
