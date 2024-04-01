@@ -131,23 +131,6 @@ pub enum MeasurementMode {
     Manual,
 }
 
-/// Integration time
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum IntegrationTime {
-    /// 40 ms
-    _40ms,
-    /// 80 ms
-    _80ms,
-    /// 160 ms
-    _160ms,
-    /// 320 ms
-    _320ms,
-    /// 640 ms
-    _640ms,
-    /// 1280 ms
-    _1280ms,
-}
-
 /// Result of measurement of all channels
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct AllChannelMeasurement {
@@ -207,3 +190,4 @@ where
 
 mod configuration;
 mod reading;
+mod integration_time;

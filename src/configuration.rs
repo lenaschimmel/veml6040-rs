@@ -1,5 +1,6 @@
 use crate::{
-    BitFlags, Error, IntegrationTime, MeasurementMode, Register, Veml6040, DEVICE_ADDRESS,
+    BitFlags, Error, MeasurementMode, Register, Veml6040, DEVICE_ADDRESS,
+    integration_time::IntegrationTime,
 };
 use embedded_hal::blocking::i2c;
 
@@ -23,14 +24,7 @@ where
     pub fn set_integration_time(&mut self, it: IntegrationTime) -> Result<(), Error<E>> {
         const IT_BITS: u8 = 0b0111_0000;
         let config = self.config & !IT_BITS;
-        match it {
-            IntegrationTime::_40ms => self.write_config(config),
-            IntegrationTime::_80ms => self.write_config(config | 0b0001_0000),
-            IntegrationTime::_160ms => self.write_config(config | 0b0010_0000),
-            IntegrationTime::_320ms => self.write_config(config | 0b0011_0000),
-            IntegrationTime::_640ms => self.write_config(config | 0b0100_0000),
-            IntegrationTime::_1280ms => self.write_config(config | 0b0101_0000),
-        }
+        self.write_config(config | it.bit_pattern())
     }
 
     /// Set the measurement mode: `Auto`/`Manual`.
